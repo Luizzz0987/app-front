@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos - Estilo Instagram</title>
+    <!-- Ícones do FontAwesome para os botões de curtir -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --ig-gradient: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            --bg-color: #fafafa;
+            --card-bg: #ffffff;
+            --border-color: #dbdbdb;
+            --text-color: #262626;
+            --secondary-text: #8e8e8e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            background: var(--ig-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Formulário de Cadastro */
+        .form-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .form-container h3 {
+            margin-top: 0;
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form-group button {
+            width: 100%;
+            background: var(--ig-gradient);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .form-group button:hover {
+            opacity: 0.9;
+        }
+
+        /* Grade / Tabela estilo Feed */
+        .alunos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .aluno-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Cabeçalho do Card (Foto de Perfil e Nome) */
+        .aluno-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            gap: 10px;
+        }
+
+        .aluno-avatar-container {
+            padding: 2px;
+            background: var(--ig-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .aluno-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .aluno-nome {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Imagem Principal do Aluno */
+        .aluno-img-container {
+            width: 100%;
+            height: 280px;
+            background-color: #efefef;
+        }
+
+        .aluno-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Rodapé do Card (Curtidas e Ações) */
+        .aluno-footer {
+            padding: 10px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .aluno-actions {
+            display: flex;
+            gap: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .aluno-actions i {
+            transition: transform 0.1s ease;
+        }
+
+        .aluno-actions i:active {
+            transform: scale(1.2);
+        }
+
+        .fa-heart.liked {
+            color: #ed4956;
+        }
+
+        .aluno-likes {
+            font-weight: 600;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Alunosgram</h1>
+
+    <!-- Formulário para Adicionar Novo Aluno -->
+    <div class="form-container">
+        <h3>Adicionar Novo Aluno</h3>
+        <form id="alunoForm">
+            <div class="form-group">
+                <label for="nome">Nome do Aluno:</label>
+                <input type="text" id="nome" required placeholder="Ex: Ana Souza">
+            </div>
+            <div class="form-group">
+                <label for="foto">URL da Foto de Perfil/Post:</label>
+                <input type="url" id="foto" required placeholder="https://exemplo.com/imagem.jpg">
+            </div>
+            <div class="form-group">
+                <button type="submit">Publicar Aluno</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Tabela/Grid de Alunos -->
+    <div class="alunos-grid" id="gridAlunos">
+        <!-- Exemplo Inicial 1 -->
+        <div class="aluno-card">
+            <div class="aluno-header">
+                <div class="aluno-avatar-container">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="aluno-avatar" alt="Avatar">
+                </div>
+                <span class="aluno-nome">Mariana Silva</span>
+            </div>
+            <div class="aluno-img-container">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500" class="aluno-img" alt="Post">
+            </div>
+            <div class="aluno-footer">
+                <div class="aluno-actions">
+                    <i class="fa-regular fa-heart" onclick="curtir(this)"></i>
+                    <i class="fa-regular fa-comment"></i>
+                </div>
+                <div class="aluno-likes"><span class="like-count">14</span> curtidas</div>
+            </div>
+        </div>
+
+        <!-- Exemplo Inicial 2 -->
+        <div class="aluno-card">
+            <div class="aluno-header">
+                <div class="aluno-avatar-container">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="aluno-avatar" alt="Avatar">
+                </div>
+                <span class="aluno-nome">Carlos Eduardo</span>
+            </div>
+            <div class="aluno-img-container">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500" class="aluno-img" alt="Post">
+            </div>
+            <div class="aluno-footer">
+                <div class="aluno-actions">
+                    <i class="fa-regular fa-heart" onclick="curtir(this)"></i>
+                    <i class="fa-regular fa-comment"></i>
+                </div>
+                <div class="aluno-likes"><span class="like-count">28</span> curtidas</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./server.js"></script>
+
+</body>
+</html>

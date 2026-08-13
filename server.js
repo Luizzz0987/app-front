@@ -1,17 +1,22 @@
-const express = require('express');
+ const inputUpload = document.getElementById('avatar')
 
-const app = express();
+inputUpload.addEventListener('change', function(evento) {
 
-app.use(express.json());
+    const arquivo = evento.target.files[0]
 
-app.get('/alunos', (req, res) => {
-    res.send("Lendo dados do banco...");
+    if (arquivo) {
+        const nomeDaImagem = arquivo.name
+        console.log(nomeDaImagem)
+    } else {
+        console.log("Nenhum arquivo selecionado.");
+    }
+});
+
+const nome = document.getElementById("Nome")
+
+const b = document.getElementById("btn")
+
+b.addEventListener("click", () => {
+    console.log(nome.value)
 })
 
-app.post('/alunos', (req, res) => {
-  res.send(`Nome: ${req.body.nome} Idade:${req.body.idade}`)
-})
-
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
-})
